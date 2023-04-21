@@ -23,7 +23,10 @@ services:
       - ./:/app
 
   mysql:
-    image: mysql:5.7
+    build: database
+    ports:
+      - 3306:3306
+    command: mysqld --sql_mode=""
     environment:
       - MYSQL_ROOT_PASSWORD=root_admin
       - MYSQL_DATABASE=pruebas1
