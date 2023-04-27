@@ -1,0 +1,34 @@
+version: '3.2'
+
+services:
+
+  frontend:
+    build: frontend
+    ports:
+      - 81:80
+    volumes:
+      # Re-use local composer cache via host-volume
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      # Mount source-code for development
+      - ./:/app
+
+  backend:
+    build: backend
+    ports:
+      - 82:80
+    volumes:
+      # Re-use local composer cache via host-volume
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      # Mount source-code for development
+      - ./:/app
+
+  mysql:
+    build: database
+    ports:
+      - 3306:3306
+    command: mysqld --sql_mode=""
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_admin
+      - MYSQL_DATABASE=pruebas1
+      - MYSQL_USER=yii2_pruebas
+      - MYSQL_PASSWORD=admin123456admin
